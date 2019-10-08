@@ -13,7 +13,7 @@ import androidx.lifecycle.LiveData
  * Description :
  */
 class CategoryViewModel(application: Application) :  AndroidViewModel(application) {
-    var mCategoryList: LiveData<List<Category>>
+    var mCategoryList: LiveData<ArrayList<Category>>
     var CategoryDAO: CategoryDAO
     var CategoryRepository: CategoryRepository
 
@@ -53,7 +53,7 @@ class CategoryViewModel(application: Application) :  AndroidViewModel(applicatio
     /**
      * LiveData gives us updated Categorys when they change.
      */
-    fun getAllCategoryData() : LiveData<List<Category>>
+    fun getAllCategoryData() : LiveData<ArrayList<Category>>
     {
         return mCategoryList
     }

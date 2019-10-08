@@ -21,7 +21,7 @@ class CategoryRepository(CategoryDAO: CategoryDAO) {
     }
 
     // Assign All record of Category
-    var allData : LiveData<List<Category>> = categoryDAO.getAllData()
+    var allData : LiveData<ArrayList<Category>> = categoryDAO.getAllData() as LiveData<ArrayList<Category>>
     val TAG = "CategoryRepository"
     lateinit var mCategoryList : MutableLiveData<Category>
 

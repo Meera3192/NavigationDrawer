@@ -2,11 +2,10 @@ package com.example.navigationdrawer.category
 
 import android.os.Bundle
 import android.text.Editable
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -22,7 +21,7 @@ class CategoryFragment : Fragment() {
 
     lateinit var categoryFragmentBinding : FragmentCategoryBinding
     private lateinit var categoryViewModel: CategoryViewModel
-
+    lateinit var adapter : CategoryAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -61,8 +60,8 @@ class CategoryFragment : Fragment() {
     }
 
     private fun getCategory(view: View) {
-        categoryViewModel.getAllCategoryData().observe(this!!.activity!!, object : Observer<List<Category>> {
-            override fun onChanged(categoryList: List<Category>?) {
+        categoryViewModel.getAllCategoryData().observe(this!!.activity!!, object : Observer<ArrayList<Category>> {
+            override fun onChanged(categoryList: ArrayList<Category>?) {
                 Toast.makeText(activity,categoryList.toString(),Toast.LENGTH_LONG).show()
                 bindData(view,categoryList)
             }
@@ -71,10 +70,10 @@ class CategoryFragment : Fragment() {
 
     private fun bindData(
         view: View,
-        categoryList: List<Category>?
+        categoryList: ArrayList<Category>?
     ) {
         view.rvCategory.layoutManager = LinearLayoutManager(activity,RecyclerView.VERTICAL,false)
-        var adapter = CategoryAdapter(categoryList)
+        adapter = CategoryAdapter(categoryList)
         view.rvCategory.adapter = adapter
         adapter.setOnEditClickListner(object : CategoryAdapter.ItemEditClickListNer{
             override fun OnEditClickListner(category: Category) {
@@ -92,6 +91,34 @@ class CategoryFragment : Fragment() {
         })
 
     }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        setHasOptionsMenu(true)
+        super.onCreate(savedInstanceState)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.main, menu)
+        val searchItem = menu.findItem(R.id.action_search)
+        //visible off
+        //searchItem.setVisible(false)
+        val searchView = searchItem?.actionView as SearchView
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(searchString: String?): Boolean {
+                adapter.filter.filter(searchString)
+                return false
+            }
+
+        })
+        super.onCreateOptionsMenu(menu,inflater)
+    }
+
+
+
 
 
 }

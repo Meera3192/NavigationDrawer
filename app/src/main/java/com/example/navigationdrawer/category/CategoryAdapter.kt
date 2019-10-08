@@ -3,12 +3,15 @@ package com.example.navigationdrawer.category
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.navigationdrawer.R
 import com.example.navigationdrawer.databinding.RowCategoryBinding
 import kotlinx.android.synthetic.main.row_category.view.*
-
+import java.security.AlgorithmConstraints
+import com.example.navigationdrawer.MainActivity
 
 /**
  * Created by Meera
@@ -19,26 +22,32 @@ import kotlinx.android.synthetic.main.row_category.view.*
  */
 
 
-class CategoryAdapter(CategoryList: List<Category>?) : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
-    var CategoryList: List<Category>?
+class CategoryAdapter(categoryList: ArrayList<Category>?) : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>(),Filterable {
+
+
+    var categoryList: ArrayList<Category>?
+    var categoryListFull: ArrayList<Category>? = null
 
     init {
-        this.CategoryList = CategoryList
+        this.categoryList = categoryList
+        this.categoryListFull = ArrayList<Category>()
+        this.categoryListFull!!.addAll(categoryList!!)
+
     }
 
-    override fun getItemCount(): Int = CategoryList!!.size
+    override fun getItemCount(): Int = categoryList!!.size
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
         if (holder != null) {
-            holder.xmlbinding?.category = CategoryList?.get(position)
+            holder.xmlbinding?.category = categoryList?.get(position)
             holder.itemView.imgEdit.setOnClickListener(object : View.OnClickListener{
                 override fun onClick(p0: View?) {
-                    itemEditClickListNer?.OnEditClickListner(CategoryList?.get(position)!!)
+                    itemEditClickListNer?.OnEditClickListner(categoryList?.get(position)!!)
                 }
             })
             holder.itemView.imgDelete.setOnClickListener(object : View.OnClickListener{
                 override fun onClick(p0: View?) {
-                    itemDeleteClickListNer?.OnDeleteClickListner(CategoryList?.get(position)!!)
+                    itemDeleteClickListNer?.OnDeleteClickListner(categoryList?.get(position)!!)
                 }
             })
         }
@@ -57,6 +66,7 @@ class CategoryAdapter(CategoryList: List<Category>?) : RecyclerView.Adapter<Cate
         }
     }
 
+    // Edit
     var itemEditClickListNer: ItemEditClickListNer? = null
 
     interface ItemEditClickListNer
@@ -69,6 +79,7 @@ class CategoryAdapter(CategoryList: List<Category>?) : RecyclerView.Adapter<Cate
         this.itemEditClickListNer = itemEditClickListNer
     }
 
+    // Delete
     var itemDeleteClickListNer: ItemDeleteClickListNer? = null
 
     interface ItemDeleteClickListNer
@@ -81,5 +92,40 @@ class CategoryAdapter(CategoryList: List<Category>?) : RecyclerView.Adapter<Cate
         this.itemDeleteClickListNer = itemDeleteClickListNer
     }
 
+    //Filter
+    override fun getFilter(): Filter {
+
+        return object : Filter(){
+            override fun performFiltering(constraints: CharSequence?): FilterResults {
+                var filterList = ArrayList<Category>()
+                if(constraints.toString().isNullOrEmpty())
+                {
+                    filterList.addAll(categoryListFull!!)
+                }
+                else
+                {
+                    var filterPattern = constraints.toString().toLowerCase().trim()
+                    for(category in categoryListFull!!)
+                    {
+                        if(category.name!!.toLowerCase().contains(filterPattern))
+                        {
+                            filterList.add(category)
+                        }
+                    }
+                }
+                var result = FilterResults()
+                result.values = filterList
+
+                return result
+            }
+
+            override fun publishResults(charSequance: CharSequence?, filterResult: FilterResults?) {
+                categoryList?.clear()
+                categoryList?.addAll(filterResult!!.values as ArrayList<Category>)
+                //categoryListFull =filterResult!!.values as ArrayList<Category>
+                notifyDataSetChanged()
+            }
+        }
+    }
 
 }
