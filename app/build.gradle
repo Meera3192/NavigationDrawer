@@ -11,7 +11,7 @@ android {
     buildToolsVersion "29.0.1"
     defaultConfig {
         applicationId "com.example.navigationdrawer"
-        minSdkVersion 16
+        minSdkVersion 22
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -60,8 +60,10 @@ dependencies {
     kapt "android.arch.lifecycle:compiler:2.0.0"
 
     //RoomDataBase
-    implementation "androidx.room:room-runtime:2.1.0"
-    kapt "androidx.room:room-compiler:2.1.0"
+    implementation "androidx.room:room-runtime:2.2.0-rc01"
+    kapt "androidx.room:room-compiler:2.2.0-rc01"
+    implementation "androidx.room:room-ktx:2.2.0-rc01"
+    androidTestImplementation "androidx.room:room-testing:2.2.0-rc01"
 
     //SDP
     implementation 'com.intuit.sdp:sdp-android:1.0.6'

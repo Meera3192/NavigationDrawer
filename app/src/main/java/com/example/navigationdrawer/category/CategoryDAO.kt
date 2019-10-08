@@ -3,7 +3,6 @@ package com.example.navigationdrawer.category
 import androidx.lifecycle.LiveData
 import androidx.room.*
 
-
 /**
  * Created by Meera
  * Date : 08-10-2019.

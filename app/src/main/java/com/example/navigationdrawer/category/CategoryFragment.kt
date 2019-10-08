@@ -12,7 +12,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-
 import com.example.navigationdrawer.R
 import com.example.navigationdrawer.databinding.FragmentCategoryBinding
 import kotlinx.android.synthetic.main.fragment_category.*
@@ -23,6 +22,7 @@ class CategoryFragment : Fragment() {
 
     lateinit var categoryFragmentBinding : FragmentCategoryBinding
     private lateinit var categoryViewModel: CategoryViewModel
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,12 +47,13 @@ class CategoryFragment : Fragment() {
             override fun onClick(p0: View?) {
                 if(btnSave.text ==  "Update")
                 {
-                    categoryViewModel.updateCategory(Category(view?.edtCategory?.text.toString()))
+                    var id = edtCategory.getTag() as Int
+                    categoryViewModel.updateCategory(Category(id,edtCategory.text.toString()))
                     edtCategory.text = null
                     btnSave.text = "Save"
                 }
                 else {
-                    categoryViewModel.insertCategory(Category(view?.edtCategory?.text.toString()))
+                    categoryViewModel.insertCategory(Category(0,view?.edtCategory?.text.toString()))
                     edtCategory.text = null
                 }
             }
@@ -79,6 +80,7 @@ class CategoryFragment : Fragment() {
             override fun OnEditClickListner(category: Category) {
                 edtCategory.setText(category.name)
                 btnSave.text = "Update"
+                edtCategory.setTag(category.id)
             }
 
         })

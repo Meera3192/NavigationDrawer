@@ -32,22 +32,22 @@ class CategoryViewModel(application: Application) :  AndroidViewModel(applicatio
     /**
      * Using CategoryRepository class method perform Insert()
      */
-    fun insertCategory(Category: Category) {
-        CategoryRepository.inserCategoryData(Category)
+    fun insertCategory(category: Category) {
+        CategoryRepository.inserCategoryData(category)
     }
 
     /**
      * Using CategoryRepository class method perform Update()
      */
-    fun updateCategory(Category: Category) {
-        CategoryRepository.updateCategoryData(Category)
+    fun updateCategory(category: Category) {
+        CategoryRepository.updateCategoryData(category)
     }
 
     /**
      * Using CategoryRepository class method perform Delete()
      */
-    fun deleteCategory(Category: Category) {
-        CategoryRepository.deleteCategoryData(Category)
+    fun deleteCategory(category: Category) {
+        CategoryRepository.deleteCategoryData(category)
     }
 
     /**

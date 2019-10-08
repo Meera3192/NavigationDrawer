@@ -1,11 +1,8 @@
 package com.example.navigationdrawer.category
 
 import android.os.AsyncTask
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import retrofit2.Call
-import retrofit2.Response
 
 
 /**
@@ -77,7 +74,7 @@ class CategoryRepository(CategoryDAO: CategoryDAO) {
      *  Use this methode we execute AsyncTask for delete data
      */
     fun deleteCategoryData(category: Category) {
-        InsertCategoryData(categoryDAO).execute(category)
+        DeleteCategoryData(categoryDAO).execute(category)
     }
 
     /**
