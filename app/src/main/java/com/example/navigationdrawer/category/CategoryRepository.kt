@@ -66,11 +66,11 @@ class CategoryRepository(CategoryDAO: CategoryDAO) {
         init {
             this.categoryDAO = categoryDAO
         }
+
         override fun doInBackground(vararg category: Category?): Void? {
             categoryDAO.UpdateCategory(category[0]!!)
             return null
         }
-
     }
 
     /**

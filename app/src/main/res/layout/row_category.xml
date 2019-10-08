@@ -1,39 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+>
     <data>
-        <variable name="category" type="com.example.navigationdrawer.category.Category"/>
+        <variable name="category"
+                  type="com.example.navigationdrawer.category.Category"/>
     </data>
-
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                   android:orientation="vertical"
-                                                   android:layout_width="match_parent"
-                                                   android:layout_height="match_parent">
-
-    <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/txtCategory"
-            android:layout_width="0dp"
+    <androidx.cardview.widget.CardView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/menu_contactlist" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/imgEdit"
-            app:layout_constraintTop_toTopOf="parent"/>
+            android:shadowRadius="2">
 
-    <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/imgEdit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_edit_black_24dp"
-            app:layout_constraintEnd_toStartOf="@+id/imgDelete"
-            app:layout_constraintTop_toTopOf="parent"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/imgDelete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            android:src="@drawable/ic_delete_black_24dp"
-            app:layout_constraintEnd_toEndOf="parent"
-           />
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txtCategory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{category.name}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/imgEdit"
+                    app:layout_constraintTop_toTopOf="parent"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/imgEdit"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_edit_black_24dp"
+
+                    app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toStartOf="@+id/imgDelete"
+                    android:layout_marginEnd="8dp" android:layout_marginRight="8dp"/>
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/imgDelete"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:src="@drawable/ic_delete_black_24dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+            />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
 </layout>
